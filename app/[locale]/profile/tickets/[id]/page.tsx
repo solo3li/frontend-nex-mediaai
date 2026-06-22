@@ -130,7 +130,7 @@ export default function TicketChat({ params }: { params: Promise<{ id: string }>
   }
 
   return (
-    <div className="bg-white/5 border border-white/10 p-6 md:p-8 rounded-3xl flex flex-col h-[700px] max-h-[80vh]">
+    <div className="bg-white/5 border border-white/10 p-6 md:p-8 rounded-3xl flex flex-col h-[calc(100vh-100px)] w-full">
       <div className="flex justify-between items-center mb-6 pb-6 border-b border-white/10">
         <div>
           <div className="flex items-center gap-3 mb-2">
@@ -186,21 +186,21 @@ export default function TicketChat({ params }: { params: Promise<{ id: string }>
               {msg.attachmentUrl && (
                 <div className="mt-2">
                   {msg.attachmentType === "image" ? (
-                    <a href={msg.attachmentUrl} target="_blank" rel="noreferrer">
-                      <img
-                        src={msg.attachmentUrl}
-                        alt="Attachment"
-                        className="max-w-full rounded-xl max-h-48 object-cover border border-white/10"
+                    <a href={msg.attachmentUrl.startsWith('/') ? `${process.env.NEXT_PUBLIC_API_URL}${msg.attachmentUrl}` : msg.attachmentUrl} target="_blank" rel="noreferrer">
+                      <img 
+                        src={msg.attachmentUrl.startsWith('/') ? `${process.env.NEXT_PUBLIC_API_URL}${msg.attachmentUrl}` : msg.attachmentUrl}
+                        alt="Attachment" 
+                        className="max-w-xs rounded-xl border border-white/10"
                       />
                     </a>
                   ) : msg.attachmentType === "audio" ? (
-                    <audio src={msg.attachmentUrl} controls className="max-w-full h-10" />
+                    <audio src={msg.attachmentUrl.startsWith('/') ? `${process.env.NEXT_PUBLIC_API_URL}${msg.attachmentUrl}` : msg.attachmentUrl} controls className="max-w-full h-10" />
                   ) : (
                     <a
-                      href={msg.attachmentUrl}
+                      href={msg.attachmentUrl.startsWith('/') ? `${process.env.NEXT_PUBLIC_API_URL}${msg.attachmentUrl}` : msg.attachmentUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex items-center gap-2 text-sm text-white/80 hover:text-white underline"
+                      className="inline-block px-4 py-2 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 text-sm text-blue-400"
                     >
                       📎 View Attachment
                     </a>
